@@ -1,24 +1,27 @@
 package vn.baitap3.models;
 
 public class Category {
-    private int id;
-    private String name;
-    private String icon;   // thêm trường icon
+    private int cateId;
+    private String cateName;
+    private String icons;
 
     public Category() {}
 
-    public Category(int id, String name, String icon) {
-        this.id = id;
-        this.name = name;
-        this.icon = icon;
+    public Category(int cateId, String cateName, String icons) {
+        this.cateId = cateId;
+        this.cateName = cateName;
+        this.icons = icons;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public Category(String cateName, String icons) {
+        this.cateName = cateName;
+        this.icons = icons;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getIcon() { return icon; }
-    public void setIcon(String icon) { this.icon = icon; }
+    public int getCateId() { return cateId; }
+    public void setCateId(int cateId) { this.cateId = cateId; }
+    public String getCateName() { return cateName; }
+    public void setCateName(String cateName) { this.cateName = cateName; }
+    public String getIcons() { return icons; }
+    public void setIcons(String icons) { this.icons = icons; }
 }

@@ -1,4 +1,3 @@
-
 package vn.baitap3.services.impl;
 
 import java.util.Date;
@@ -17,7 +16,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         Date now = new Date();
-        User u = new User(email, username, fullname, password, null, 2, phone, now);
+        User u = new User(email, username, password, fullname, phone);
         dao.insert(u);
         return true;
     }
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String username, String password) {
         User u = dao.findByUsername(username);
-        if (u != null && u.getPassWord().equals(password)) {
+        if (u != null && u.getPassword().equals(password)) {
             return u;
         }
         return null;

@@ -7,30 +7,20 @@ import vn.baitap3.models.Category;
 import vn.baitap3.services.CategoryService;
 
 public class CategoryServiceImpl implements CategoryService {
-    private CategoryDao categoryDao = new CategoryDaoImpl();
+    private CategoryDao dao = new CategoryDaoImpl();
 
     @Override
-    public List<Category> findAll() {
-        return categoryDao.findAll();
-    }
+    public void insert(Category category) { dao.insert(category); }
 
     @Override
-    public Category findById(int id) {
-        return categoryDao.findById(id);
-    }
+    public void update(Category category) { dao.update(category); }
 
     @Override
-    public void insert(Category category) {
-        categoryDao.insert(category);
-    }
+    public void delete(int id) { dao.delete(id); }
 
     @Override
-    public void update(Category category) {
-        categoryDao.update(category);
-    }
+    public Category get(int id) { return dao.get(id); }
 
     @Override
-    public void delete(int id) {
-        categoryDao.delete(id);
-    }
+    public List<Category> getAll() { return dao.getAll(); }
 }

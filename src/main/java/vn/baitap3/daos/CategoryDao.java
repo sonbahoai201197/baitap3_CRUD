@@ -4,9 +4,9 @@ import java.util.List;
 import vn.baitap3.models.Category;
 
 public interface CategoryDao {
-    List<Category> findAll();
-    Category findById(int id);
-    void update(Category category);
     void insert(Category category);
+    void update(Category category);
     void delete(int id);
+    Category get(int id);
+    List<Category> getAll();
 }
