@@ -21,15 +21,19 @@ public class CategoryDaoImpl extends DBContext implements CategoryDao {
 
     @Override
     public void update(Category category) {
-        String sql = "UPDATE category SET cate_name=?, icons=? WHERE cate_id=?";
-        try (Connection conn = getConnection();
+        String sql = "UPDATE category SET cate_name = ?, icons = ? WHERE cate_id = ?";
+        try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, category.getCateName());
             ps.setString(2, category.getIcons());
             ps.setInt(3, category.getCateId());
             ps.executeUpdate();
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    
 
     @Override
     public void delete(int id) {
@@ -72,4 +76,6 @@ public class CategoryDaoImpl extends DBContext implements CategoryDao {
         } catch (Exception e) { e.printStackTrace(); }
         return list;
     }
+    
+    
 }

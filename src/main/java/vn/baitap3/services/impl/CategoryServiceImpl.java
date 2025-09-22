@@ -23,4 +23,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAll() { return dao.getAll(); }
+    @Override
+    public void edit(Category cate) {
+        dao.update(cate); // gọi xuống DAO
+    }
+
 }

@@ -1,15 +1,20 @@
 package vn.baitap3.controllers;
 
 import java.io.IOException;
-import jakarta.servlet.*;
+import java.nio.file.Paths;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import vn.baitap3.models.Category;
 import vn.baitap3.services.CategoryService;
 import vn.baitap3.services.impl.CategoryServiceImpl;
+import vn.baitap3.utils.Constant;
 
 @WebServlet(urlPatterns = {"/admin/category/edit"})
+@MultipartConfig
 public class CategoryEditController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     private CategoryService cateService = new CategoryServiceImpl();
 
     @Override
@@ -17,7 +22,7 @@ public class CategoryEditController extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         Category cate = cateService.get(id);
-        req.setAttribute("cate", cate);
+        req.setAttribute("category", cate);
         req.getRequestDispatcher("/views/admin/edit-category.jsp").forward(req, resp);
     }
 
@@ -25,13 +30,24 @@ public class CategoryEditController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        int id = Integer.parseInt(req.getParameter("cate_id"));
-        String name = req.getParameter("cate_name");
-        String icons = req.getParameter("icons");
+        resp.setCharacterEncoding("UTF-8");
 
-        Category c = new Category(id, name, icons);
-        cateService.update(c);
+        int id = Integer.parseInt(req.getParameter("id"));
+        String cateName = req.getParameter("name");
+        Part part = req.getPart("icon");
 
+        Category cate = cateService.get(id);
+        cate.setCateName(cateName);
+
+        if (part != null && part.getSize() > 0) {
+            String originalFileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+            String fileName = System.currentTimeMillis() + ext;
+            part.write(Constant.DIR + "\\category\\" + fileName);
+            cate.setIcons("category/" + fileName);
+        }
+
+        cateService.edit(cate);
         resp.sendRedirect(req.getContextPath() + "/admin/category/list");
     }
 }

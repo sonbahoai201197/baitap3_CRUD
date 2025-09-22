@@ -1,7 +1,7 @@
 package vn.baitap3.controllers;
 
 import java.io.IOException;
-import jakarta.servlet.*;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import vn.baitap3.services.CategoryService;
@@ -9,6 +9,7 @@ import vn.baitap3.services.impl.CategoryServiceImpl;
 
 @WebServlet(urlPatterns = {"/admin/category/delete"})
 public class CategoryDeleteController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     private CategoryService cateService = new CategoryServiceImpl();
 
     @Override

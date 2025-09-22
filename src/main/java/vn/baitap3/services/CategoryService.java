@@ -9,4 +9,6 @@ public interface CategoryService {
     void delete(int id);
     Category get(int id);
     List<Category> getAll();
+    public void edit(Category cate);
+
 }
