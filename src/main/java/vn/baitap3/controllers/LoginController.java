@@ -11,6 +11,7 @@ import vn.baitap3.services.impl.UserServiceImpl;
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
     private UserService userService = new UserServiceImpl();
+    private static final long serialVersionUID = 1L;
     public static final String COOKIE_REMEMBER = "username";
 
     @Override

@@ -1,50 +1,43 @@
+
 package vn.baitap3.services.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
-import vn.baitap3.models.Category;
-import vn.baitap3.services.CategoryService;
+import vn.baitap3.daos.UserDao;
+import vn.baitap3.daos.impl.UserDaoImpl;
+import vn.baitap3.models.User;
+import vn.baitap3.services.UserService;
 
-public class CategoryServiceImpl implements CategoryService {
-
-    // ⚠️ Tạm thời dùng List giả lập DB
-    private static List<Category> categories = new ArrayList<>();
-
-    static {
-        categories.add(new Category(1, "Laptop", "Danh mục Laptop"));
-        categories.add(new Category(2, "Điện thoại", "Danh mục Điện thoại"));
-    }
+public class UserServiceImpl implements UserService {
+    private UserDao dao = new UserDaoImpl();
 
     @Override
-    public List<Category> findAll() {
-        return categories;
-    }
-
-    @Override
-    public Category findById(int id) {
-        return categories.stream()
-                .filter(c -> c.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
-
-    @Override
-    public void insert(Category category) {
-        categories.add(category);
-    }
-
-    @Override
-    public void update(Category category) {
-        Category old = findById(category.getId());
-        if (old != null) {
-            old.setName(category.getName());
-            old.setDescription(category.getDescription());
+    public boolean register(String username, String password, String email, String fullname, String phone) {
+        if (dao.checkExistUsername(username) || dao.checkExistEmail(email) || dao.checkExistPhone(phone)) {
+            return false;
         }
+        Date now = new Date();
+        User u = new User(email, username, fullname, password, null, 2, phone, now);
+        dao.insert(u);
+        return true;
     }
 
     @Override
-    public void delete(int id) {
-        categories.removeIf(c -> c.getId() == id);
+    public boolean checkExistEmail(String email) {
+        return dao.checkExistEmail(email);
+    }
+
+    @Override
+    public boolean checkExistUsername(String username) {
+        return dao.checkExistUsername(username);
+    }
+
+    @Override
+    public User login(String username, String password) {
+        User u = dao.findByUsername(username);
+        if (u != null && u.getPassWord().equals(password)) {
+            return u;
+        }
+        return null;
     }
 }

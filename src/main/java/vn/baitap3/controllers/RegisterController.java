@@ -1,15 +1,20 @@
 package vn.baitap3.controllers;
 
 import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import vn.baitap3.services.UserService;
 import vn.baitap3.services.impl.UserServiceImpl;
 
 @WebServlet("/register")
 public class RegisterController extends HttpServlet {
-    private UserService userService = new UserServiceImpl();
+    private static final long serialVersionUID = 1L;
+    private UserService service = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -19,22 +24,28 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        String email = req.getParameter("email");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        String email = req.getParameter("email");
         String fullname = req.getParameter("fullname");
         String phone = req.getParameter("phone");
 
-        if (userService.checkExistEmail(email)) {
-            req.setAttribute("error", "Email đã tồn tại");
+        if (service.checkExistEmail(email)) {
+            req.setAttribute("alert", "Email đã tồn tại!");
             req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
             return;
         }
-        boolean ok = userService.register(email, username, password, fullname, phone);
+        if (service.checkExistUsername(username)) {
+            req.setAttribute("alert", "Username đã tồn tại!");
+            req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
+            return;
+        }
+
+        boolean ok = service.register(username, password, email, fullname, phone);
         if (ok) {
             resp.sendRedirect(req.getContextPath() + "/login");
         } else {
-            req.setAttribute("error", "Đăng ký thất bại");
+            req.setAttribute("alert", "Đăng ký thất bại!");
             req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
         }
     }
