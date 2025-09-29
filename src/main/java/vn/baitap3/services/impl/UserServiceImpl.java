@@ -32,8 +32,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String username, String password) {
-        User u = dao.findByUsername(username);
+    public User login(String usernameOrEmail, String password) {
+        // thử tìm theo username
+        User u = dao.findByUsername(usernameOrEmail);
+
+        // nếu không có thì thử tiếp theo email
+        if (u == null && dao instanceof UserDaoImpl) {
+            u = ((UserDaoImpl) dao).findByEmail(usernameOrEmail);
+        }
+
+        // kiểm tra mật khẩu plain text
         if (u != null && u.getPassword().equals(password)) {
             return u;
         }

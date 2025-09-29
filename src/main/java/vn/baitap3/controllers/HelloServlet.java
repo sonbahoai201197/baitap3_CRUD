@@ -11,27 +11,21 @@ import jakarta.servlet.http.HttpSession;
 
 import vn.baitap3.models.User;
 
-@WebServlet("/hello")  // URL để truy cập servlet này
+@WebServlet("/hello")
 public class HelloServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    // Hàm GET mặc định khi người dùng truy cập /hello
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        // Lấy session hiện tại (nếu chưa có thì tạo mới = true)
-        HttpSession session = req.getSession(false); // false = không tạo mới nếu chưa có
-
-        // Kiểm tra user trong session (do LoginController set khi đăng nhập thành công)
-        User u = (session != null) ? (User) session.getAttribute("user") : null;
+        HttpSession session = req.getSession(false);
+        User u = (session != null) ? (User) session.getAttribute("account") : null; // ✅ dùng "account"
 
         if (u == null) {
-            // Nếu chưa login thì redirect về trang login
             resp.sendRedirect(req.getContextPath() + "/login");
         } else {
-            // Nếu đã login thì forward sang hello.jsp để hiển thị thông tin
-            req.setAttribute("user", u); // đính kèm user để JSP dùng EL hiển thị
+            req.setAttribute("user", u);
             req.getRequestDispatcher("/views/hello.jsp").forward(req, resp);
         }
     }

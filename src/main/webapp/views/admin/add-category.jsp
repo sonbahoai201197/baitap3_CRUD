@@ -24,6 +24,11 @@
             <label class="form-label">Chọn Icon</label>
             <input type="file" class="form-control" name="icon" accept="image/*">
         </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Giá</label>
+            <input type="text" class="form-control" name="price" required>
+        </div>
 
         <button type="submit" class="btn btn-success">Lưu</button>
         <a href="${pageContext.request.contextPath}/admin/category/list" 

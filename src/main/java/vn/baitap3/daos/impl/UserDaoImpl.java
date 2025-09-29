@@ -9,9 +9,11 @@ import vn.baitap3.daos.UserDao;
 import vn.baitap3.models.User;
 
 public class UserDaoImpl implements UserDao {
+
     @Override
     public void insert(User user) {
-        String sql = "INSERT INTO users(email, username, fullname, password, avatar, roleid, phone, createddate) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO users(email, username, fullname, password, avatar, roleid, phone, createddate) "
+                   + "VALUES (?,?,?,?,?,?,?,?)";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -22,7 +24,6 @@ public class UserDaoImpl implements UserDao {
             ps.setString(5, user.getAvatar());
             ps.setInt(6, user.getRoleid());
             ps.setString(7, user.getPhone());
-            // chuyển java.util.Date -> java.sql.Date
             java.sql.Date sqlDate = new java.sql.Date(user.getCreatedDate().getTime());
             ps.setDate(8, sqlDate);
 
@@ -82,21 +83,42 @@ public class UserDaoImpl implements UserDao {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                User u = new User();
-                u.setId(rs.getInt("id"));
-                u.setEmail(rs.getString("email"));
-                u.setUsername(rs.getString("username"));
-                u.setFullname(rs.getString("fullname"));
-                u.setPassword(rs.getString("password"));
-                u.setAvatar(rs.getString("avatar"));
-                u.setRoleid(rs.getInt("roleid"));
-                u.setPhone(rs.getString("phone"));
-                u.setCreatedDate(rs.getDate("createddate"));
-                return u;
+                return extractUser(rs);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // ✅ Hàm mới: tìm user theo email
+    public User findByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return extractUser(rs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // helper chung để tránh lặp code
+    private User extractUser(ResultSet rs) throws Exception {
+        User u = new User();
+        u.setId(rs.getInt("id"));
+        u.setEmail(rs.getString("email"));
+        u.setUsername(rs.getString("username"));
+        u.setFullname(rs.getString("fullname"));
+        u.setPassword(rs.getString("password"));
+        u.setAvatar(rs.getString("avatar"));
+        u.setRoleid(rs.getInt("roleid"));
+        u.setPhone(rs.getString("phone"));
+        u.setCreatedDate(rs.getDate("createddate"));
+        return u;
     }
 }

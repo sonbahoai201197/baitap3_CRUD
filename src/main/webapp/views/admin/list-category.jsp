@@ -39,7 +39,8 @@
                     <tr>
                         <th style="width:80px">ID</th>
                         <th>Tên Danh mục</th>
-                        <th style="width:150px">Icon</th>
+                        <th style="width:150px">Hình ảnh</th>
+                        <th style="width:120px">Giá</th>
                         <th style="width:170px">Hành động</th>
                     </tr>
                 </thead>
@@ -64,6 +65,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
+                                    <td class="text-center">${c.price}</td>
                                     <td class="text-center action-btns">
                                         <a href="${pageContext.request.contextPath}/admin/category/edit?id=${c.cateId}" class="btn btn-primary btn-sm">Sửa</a>
                                         <a href="${pageContext.request.contextPath}/admin/category/delete?id=${c.cateId}"
@@ -75,7 +77,7 @@
                         </c:when>
                         <c:otherwise>
                             <tr>
-                                <td colspan="4" class="text-center py-4">Chưa có danh mục nào.</td>
+                                <td colspan="5" class="text-center py-4">Chưa có danh mục nào.</td>
                             </tr>
                         </c:otherwise>
                     </c:choose>

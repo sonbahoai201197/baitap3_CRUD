@@ -30,8 +30,19 @@ public class CategoryAddController extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String cateName = req.getParameter("name");
-        Part part = req.getPart("icon");
 
+        // ✅ Xử lý price an toàn
+        double price = 0;
+        String priceStr = req.getParameter("price");
+        if (priceStr != null && !priceStr.trim().isEmpty()) {
+            try {
+                price = Double.parseDouble(priceStr.trim());
+            } catch (NumberFormatException e) {
+                price = 0;
+            }
+        }
+
+        Part part = req.getPart("icon");
         String fileName = null;
         if (part != null && part.getSize() > 0) {
             String originalFileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
@@ -42,6 +53,7 @@ public class CategoryAddController extends HttpServlet {
 
         Category cate = new Category();
         cate.setCateName(cateName);
+        cate.setPrice(price);
         cate.setIcons(fileName != null ? "category/" + fileName : null);
 
         cateService.insert(cate);

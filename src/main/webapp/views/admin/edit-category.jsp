@@ -30,6 +30,11 @@
             <label class="form-label">Chọn Icon mới (nếu muốn thay đổi)</label>
             <input type="file" class="form-control" name="icon">
         </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Giá</label>
+            <input type="text" class="form-control" name="price" value="${category.price}" required>
+        </div>
 
         <button type="submit" class="btn btn-primary">Cập nhật</button>
         <a href="${pageContext.request.contextPath}/admin/category/list" class="btn btn-secondary">Quay lại</a>
