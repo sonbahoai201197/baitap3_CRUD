@@ -4,18 +4,17 @@ public class Category {
     private int cateId;
     private String cateName;
     private String icons;
-    private double price;   // thêm field mới
 
     public Category() {}
 
-    public Category(int cateId, String cateName, String icons, double price) {
+    // Constructor mới không có price
+    public Category(int cateId, String cateName, String icons) {
         this.cateId = cateId;
         this.cateName = cateName;
         this.icons = icons;
-        this.price = price;
     }
 
-    // getter & setter
+    // getter & setter (đã xóa price)
     public int getCateId() {
         return cateId;
     }
@@ -34,10 +33,5 @@ public class Category {
     public void setIcons(String icons) {
         this.icons = icons;
     }
-    public double getPrice() {
-        return price;
-    }
-    public void setPrice(double price) {
-        this.price = price;
-    }
+    // Đã xóa getPrice() và setPrice()
 }

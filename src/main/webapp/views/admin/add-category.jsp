@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,11 +23,6 @@
         <div class="mb-3">
             <label class="form-label">Chọn Icon</label>
             <input type="file" class="form-control" name="icon" accept="image/*">
-        </div>
-        
-        <div class="mb-3">
-            <label class="form-label">Giá</label>
-            <input type="text" class="form-control" name="price" required>
         </div>
 
         <button type="submit" class="btn btn-success">Lưu</button>

@@ -31,16 +31,6 @@ public class CategoryAddController extends HttpServlet {
 
         String cateName = req.getParameter("name");
 
-        // ✅ Xử lý price an toàn
-        double price = 0;
-        String priceStr = req.getParameter("price");
-        if (priceStr != null && !priceStr.trim().isEmpty()) {
-            try {
-                price = Double.parseDouble(priceStr.trim());
-            } catch (NumberFormatException e) {
-                price = 0;
-            }
-        }
 
         Part part = req.getPart("icon");
         String fileName = null;
@@ -53,7 +43,6 @@ public class CategoryAddController extends HttpServlet {
 
         Category cate = new Category();
         cate.setCateName(cateName);
-        cate.setPrice(price);
         cate.setIcons(fileName != null ? "category/" + fileName : null);
 
         cateService.insert(cate);

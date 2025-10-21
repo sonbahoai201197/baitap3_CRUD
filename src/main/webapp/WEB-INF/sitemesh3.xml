@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+
+    <mapping path="/admin/*" decorator="/WEB-INF/decorators/admin.jsp"/>
+
+    <mapping path="/login" decorator="/WEB-INF/decorators/login-layout.jsp"/>
+    <mapping path="/register" decorator="/WEB-INF/decorators/login-layout.jsp"/>
+    
+    <mapping path="/image" exclude="true"/> 
+
+    <mapping path="/*" decorator="/WEB-INF/decorators/web.jsp"/>
+
+</sitemesh>

@@ -10,13 +10,12 @@ public class CategoryDaoImpl extends DBContext implements CategoryDao {
 
     @Override
     public void insert(Category category) {
-        // ✅ thêm price vào SQL
-        String sql = "INSERT INTO category(cate_name, icons, price) VALUES (?, ?, ?)";
+        // ✅ Xóa price khỏi SQL
+        String sql = "INSERT INTO category(cate_name, icons) VALUES (?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, category.getCateName());
             ps.setString(2, category.getIcons());
-            ps.setDouble(3, category.getPrice());  // đúng vị trí thứ 3
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -25,14 +24,13 @@ public class CategoryDaoImpl extends DBContext implements CategoryDao {
 
     @Override
     public void update(Category category) {
-        // ✅ thêm price vào SQL
-        String sql = "UPDATE category SET cate_name = ?, icons = ?, price = ? WHERE cate_id = ?";
+        // ✅ Xóa price khỏi SQL
+        String sql = "UPDATE category SET cate_name = ?, icons = ? WHERE cate_id = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, category.getCateName());
             ps.setString(2, category.getIcons());
-            ps.setDouble(3, category.getPrice());   // giá trị price
-            ps.setInt(4, category.getCateId());     // id ở cuối
+            ps.setInt(3, category.getCateId()); // Cập nhật tham số thứ 3
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,11 +55,11 @@ public class CategoryDaoImpl extends DBContext implements CategoryDao {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                // ✅ Xóa price khỏi hàm khởi tạo
                 return new Category(
                     rs.getInt("cate_id"),
                     rs.getString("cate_name"),
-                    rs.getString("icons"),
-                    rs.getDouble("price")
+                    rs.getString("icons")
                 );
             }
         } catch (Exception e) { e.printStackTrace(); }
@@ -76,11 +74,11 @@ public class CategoryDaoImpl extends DBContext implements CategoryDao {
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
+                // ✅ Xóa price khỏi hàm khởi tạo
                 list.add(new Category(
                     rs.getInt("cate_id"),
                     rs.getString("cate_name"),
-                    rs.getString("icons"),
-                    rs.getDouble("price")
+                    rs.getString("icons")
                 ));
             }
         } catch (Exception e) { e.printStackTrace(); }

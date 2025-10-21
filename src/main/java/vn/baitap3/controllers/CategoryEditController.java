@@ -35,22 +35,11 @@ public class CategoryEditController extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         String cateName = req.getParameter("name");
 
-        // ✅ Xử lý price an toàn
-        double price = 0;
-        String priceStr = req.getParameter("price");
-        if (priceStr != null && !priceStr.trim().isEmpty()) {
-            try {
-                price = Double.parseDouble(priceStr.trim());
-            } catch (NumberFormatException e) {
-                price = 0;
-            }
-        }
 
         Part part = req.getPart("icon");
 
         Category cate = cateService.get(id);
         cate.setCateName(cateName);
-        cate.setPrice(price);
 
         if (part != null && part.getSize() > 0) {
             String originalFileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
