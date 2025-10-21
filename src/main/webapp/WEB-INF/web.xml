@@ -12,9 +12,9 @@
     </filter>
     <filter-mapping>
         <filter-name>sitemesh</filter-name>
-        <url-pattern>/*</url-pattern>   <dispatcher>REQUEST</dispatcher>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
-
     </filter-mapping>
 
     <welcome-file-list>
@@ -23,4 +23,4 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
-    </web-app>
+</web-app>
