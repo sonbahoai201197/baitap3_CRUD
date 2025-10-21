@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
-
-    <mapping path="/admin/*" decorator="/WEB-INF/decorators/admin.jsp"/>
-
-    <mapping path="/login" decorator="/WEB-INF/decorators/login-layout.jsp"/>
-    <mapping path="/register" decorator="/WEB-INF/decorators/login-layout.jsp"/>
-    
-    <mapping path="/image" exclude="true"/> 
-
-    <mapping path="/*" decorator="/WEB-INF/decorators/web.jsp"/>
-
+<mapping path="/*" name="web" decorator="web.jsp"/>
+<mapping path="/admin/*" name="admin" decorator="admin.jsp"/>
+<!-- Exclude path from decoration. -->
+<mapping path="/api*" exclude="true"/>
 </sitemesh>

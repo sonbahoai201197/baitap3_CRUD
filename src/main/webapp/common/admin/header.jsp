@@ -1,18 +1,27 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">TRANG QUẢN TRỊ</a>
-    
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" 
-            data-bs-toggle="collapse" data-bs-target="#sidebarMenu" 
-            aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Tìm kiếm..." aria-label="Search">
-    
-    <div class="navbar-nav">
-        <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
-        </div>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ <%@ taglib prefix="core1" uri="jakarta.tags.core" %>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="${pageContext.request.contextPath}/admin/home">Logo</a>
     </div>
-</header>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="${pageContext.request.contextPath}/admin/home">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="${pageContext.request.contextPath }/logout"><span class="glyphicon glyphicon-log-in"></span> Đăng xuất</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

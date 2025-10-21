@@ -1,52 +1,49 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+  <%@ taglib prefix="c" uri="jakarta.tags.core" %>  
+ 
 
-<header class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="${pageContext.request.contextPath}/home">
-            <i class="fa-solid fa-database me-2"></i> Baitap3 Project
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/home">Trang chủ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Giới thiệu (Ví dụ)</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sản phẩm (Ví dụ)</a>
-                </li>
-            </ul>
-            <div class="navbar-nav ms-auto">
-                <c:choose>
-                    <c:when test="${not empty sessionScope.account}">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user-circle me-1"></i>
-                                Xin chào, ${sessionScope.account.fullname != null ? sessionScope.account.fullname : sessionScope.account.username}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/hello">Thông tin tài khoản</a></li>
-                                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/category/list">Đi đến Admin</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
-                            </ul>
-                        </li>
-                    </c:when>
-                    <c:otherwise>
-                        <li class="nav-item">
-                            <a href="${pageContext.request.contextPath}/login" class="btn btn-light btn-sm me-2">Đăng nhập</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="${pageContext.request.contextPath}/register" class="btn btn-outline-light btn-sm">Đăng ký</a>
-                        </li>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+
+    <header>
+    
+         <core1:choose>
+
+		<core1:when test="${sessionScope.account == null}">
+		<div class="col-sm-4">
+		<ul class="list-inline right-topbar pull-right">
+		<li><a href="${pageContext.request.contextPath }/login">Đăng nhập</a>
+		| <a href="${pageContext.request.contextPath }/register">Đăng ký</a></li>
+		
+		<li><i class="search fa fa-search search-button"></i></li>
+		</ul>
+		</div>
+		</core1:when>
+		
+		<core1:otherwise>
+		<div class="col-sm-4">
+		<ul class="list-inline right-topbar pull-right">
+		<li><a href="${pageContext.request.contextPath
+		}/member/myaccount">${sessionScope.account.fullname}</a> | <a
+		href="${pageContext.request.contextPath }/logout">Đăng Xuất</a></li>
+		<li><i class="search fa fa-search search-button"></i></li>
+		</ul>
+		</div>
+		</core1:otherwise>
+		
+		</core1:choose>
+        <div class="container">
+   
+
+            <h1>Trang Web Bán Hàng</h1>
+            <nav>
+                <ul>
+                    <li><a href="${pageContext.request.contextPath }">Trang Chủ</a></li>
+                    <li><a href="${pageContext.request.contextPath }/products">Sản phẩm</a></li>
+                    <li><a href="#">Giới Thiệu</a></li>
+                    <li><a href="#">Dịch Vụ</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                    <li><a href="${pageContext.request.contextPath }/login">Đăng nhập</a></li>
+                </ul>
+            </nav>
         </div>
-    </div>
-</header>
+    </header>
