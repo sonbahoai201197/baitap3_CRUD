@@ -18,6 +18,31 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // Check if user is already logged in
+        HttpSession session = req.getSession(false);
+        if (session != null && session.getAttribute("account") != null) {
+            User user = (User) session.getAttribute("account");
+            // Redirect based on role
+            if (user.getRoleid() == 1) {
+                resp.sendRedirect(req.getContextPath() + "/admin/home");
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/home");
+            }
+            return;
+        }
+
+        // Check remember cookie
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (COOKIE_REMEMBER.equals(cookie.getName())) {
+                    req.setAttribute("username", cookie.getValue());
+                    req.setAttribute("remember", "on");
+                    break;
+                }
+            }
+        }
+        
         req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
     }
 
@@ -46,7 +71,12 @@ public class LoginController extends HttpServlet {
                 resp.addCookie(cookie);
             }
 
-            resp.sendRedirect(req.getContextPath() + "/hello");  // ✅ chuyển sang hello
+            // Redirect based on role
+            if (user.getRoleid() == 1) {
+                resp.sendRedirect(req.getContextPath() + "/admin/home");
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/home");
+            }
         } else {
             req.setAttribute("alert", "Sai tài khoản hoặc mật khẩu");
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);

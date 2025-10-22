@@ -6,12 +6,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import vn.baitap3.models.User;
 
-@WebServlet("/home")
-public class HomeController extends HttpServlet {
+@WebServlet("/admin/home")
+public class AdminHomeController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Check if user is logged in
+        // Check if user is logged in and is admin
         HttpSession session = req.getSession(false);
         if (session == null || session.getAttribute("account") == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
@@ -19,13 +20,12 @@ public class HomeController extends HttpServlet {
         }
 
         User user = (User) session.getAttribute("account");
-        // If admin tries to access user home, redirect to admin home
-        if (user.getRoleid() == 1) {
-            resp.sendRedirect(req.getContextPath() + "/admin/home");
+        if (user.getRoleid() != 1) {
+            resp.sendRedirect(req.getContextPath() + "/home");
             return;
         }
 
-        // Hiển thị view web/home.jsp
-        req.getRequestDispatcher("/views/web/home.jsp").forward(req, resp);
+        // Show admin home page
+        req.getRequestDispatcher("/views/admin/home.jsp").forward(req, resp);
     }
 }
